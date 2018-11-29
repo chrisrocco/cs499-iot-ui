@@ -1,0 +1,9 @@
+.DeviceList-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.DeviceList-item {
+    height: 100px;
+    flex-basis: 20%;
+}   

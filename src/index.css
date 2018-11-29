@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+
+/* Stat Boxes */
+.stats {
+  margin: 0 0 30px 0; }
+
+.stat-box {
+  background-color: #00ad79;
+  border-radius: 2px;
+  color: #fff;
+  margin: 0 0 30px 0;
+  padding: 25px 30px;
+  position: relative; }
+.stat-box strong, .stat-box span {
+  display: block;
+  line-height: 1;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+.stat-box strong {
+  font-size: 34px;
+  font-weight: 300; }
+.stat-box span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  margin: 8px 0 0 0; }
+.stat-box.stat-box-cool-gray {
+  background-color: #909cab; }
+.stat-box.stat-box-green {
+  background-color: #14AD6F; }
+.stat-box.stat-box-blue {
+  background-color: #32A9ED; }
+.stat-box.stat-box-red {
+  background-color: #F74949; }
+.stat-box.stat-box-purple {
+  background-color: #486FE4; }
+
+.stat-box-icon {
+  bottom: 0;
+  color: rgba(255, 255, 255, 0.2);
+  display: block;
+  font-size: 80px;
+  left: 0;
+  position: absolute;
+  transform: translateX(-20%) translateY(20%); }
+
+.stat-progress {
+  margin-bottom: 15px; }
+
+.stat-progress-bar {
+  background-color: #eeeeee;
+  border-radius: 2px;
+  height: 9px;
+  padding: 2px; }
+
+.stat-progress-label {
+  color: #7f7f7f;
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 0 0 5px 0; }
+.stat-progress-label span {
+  color: #b2b2b2;
+  float: right; }
+
+.stat-progress-bar-inner {
+  background-color: #00ad79;
+  background-image: linear-gradient(to right, #738295, #adb6c1);
+  border-radius: 2px;
+  height: 5px; }

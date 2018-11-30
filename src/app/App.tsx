@@ -9,23 +9,13 @@ import DeviceList from "./devices/DeviceList";
 declare let Object: any
 
 
-class App extends React.Component<{ core }, { devices }> {
+class App extends React.Component<{ core }, { devices, home }> {
 
     constructor(props) {
         super(props)
         this.state = {
-            devices: [
-                {
-                    id: '1234',
-                    meta: {
-                        title: 'Garage Door'
-                    },
-                    state: {
-                        projected: '123',
-                        actual: '123'
-                    }
-                }
-            ]
+            devices: [],
+            home: {}
         }
     }
 
@@ -37,7 +27,18 @@ class App extends React.Component<{ core }, { devices }> {
             .state$
             .subscribe(state => {
                 this.setState({
-                    devices: Object.values(state)
+                    devices: state
+                })
+            })
+
+        this.props
+            .core
+            .features
+            .home
+            .state$
+            .subscribe(state => {
+                this.setState({
+                    home: state
                 })
             })
     }
@@ -48,27 +49,31 @@ class App extends React.Component<{ core }, { devices }> {
 
                 <Toolbar/>
 
-                <HomeScorecards/>
+                <HomeScorecards home={this.state.home}/>
 
                 <div className="floorplan-row">
                     <div className="floorplan">
                         <img src="images/demo-floormap.jpg"/>
                     </div>
                     <div className="temp-controls">
-                        <Thermometer
-                            theme="light"
-                            value="18"
-                            max="100"
-                            steps="3"
-                            format="°F"
-                            size="large"
-                            height="400"
-                        />
+                        {this.state.devices['weather_sensor'] ?
+                            <Thermometer
+                                theme="light"
+                                value={this.state.devices['weather_sensor'].state.actual.outdoor_temp}
+                                max="100"
+                                steps="3"
+                                format="°F"
+                                size="large"
+                                height="400"
+                            />
+                            :
+                            null
+                        }
                     </div>
                 </div>
 
                 <div>
-                    <DeviceList core={this.props.core} devices={this.state.devices}/>
+                    <DeviceList core={this.props.core} devices={Object.values(this.state.devices)}/>
                 </div>
             </div>
         );

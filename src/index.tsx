@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {DevicesModule} from "./core/devices/devices.module";
 import * as EventEmitter from 'events'
 import {config} from "./config";
+import {HomeModule} from "./core/home/home.module";
 
 
 /**
@@ -20,13 +21,17 @@ const events = new EventEmitter()
 
 // Instantiate Modules
 const devices = DevicesModule(config)
+const home = HomeModule(devices)
+
+home.state$.subscribe(console.log)
 
 
 // Initialize the application core
 const core = {
     events,
     features: {
-        devices
+        devices,
+        home
     }
 }
 

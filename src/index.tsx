@@ -6,10 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import registerServiceWorker from './registerServiceWorker';
 import {DevicesModule} from "./core/devices/devices.module";
 import * as EventEmitter from 'events'
-import {Database} from "./core/Database";
 import {config} from "./config";
 
-declare let window: any
 
 /**
  * Composition Root
@@ -21,14 +19,11 @@ const events = new EventEmitter()
 
 
 // Instantiate Modules
-const db = Database()
-window.database = window.db = window.DB = db // Debugging purposes only
-const devices = DevicesModule(config, db)
+const devices = DevicesModule(config)
 
 
 // Initialize the application core
 const core = {
-    db,
     events,
     features: {
         devices
@@ -44,6 +39,7 @@ events.on('devices.command', cmd => {
         .controller
         .command(cmd.key, cmd.device_id)
 })
+
 
 ReactDOM.render(
   <App core={core} />,

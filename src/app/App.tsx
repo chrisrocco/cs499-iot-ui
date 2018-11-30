@@ -4,16 +4,45 @@ import './App.css';
 import Thermometer from 'react-thermometer-component';
 import {HomeScorecards} from "./scorecards/HomeScorecards";
 import {Toolbar} from "./toolbar/Toolbar";
-import {makeDeviceList} from "./devices/makeDeviceList";
+import DeviceList from "./devices/DeviceList";
 
-class App extends React.Component<{ core }> {
+declare let Object: any
+
+
+class App extends React.Component<{ core }, { devices }> {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            devices: [
+                {
+                    id: '1234',
+                    meta: {
+                        title: 'Garage Door'
+                    },
+                    state: {
+                        projected: '123',
+                        actual: '123'
+                    }
+                }
+            ]
+        }
+    }
+
+    componentDidMount(): void {
+        this.props
+            .core
+            .features
+            .devices
+            .state$
+            .subscribe(state => {
+                this.setState({
+                    devices: Object.values(state)
+                })
+            })
+    }
 
     public render() {
-
-        const {core} = this.props
-
-        const deviceList = makeDeviceList(core)
-
         return (
             <div className="App">
 
@@ -39,7 +68,7 @@ class App extends React.Component<{ core }> {
                 </div>
 
                 <div>
-                    {deviceList}
+                    <DeviceList core={this.props.core} devices={this.state.devices}/>
                 </div>
             </div>
         );

@@ -1,29 +1,41 @@
 import {ProjectionsService} from "./projections.service";
-import {map, tap} from "rxjs/operators";
 import {WebSocketService} from "./ws.service";
-import {Subject} from "rxjs";
-import {DeviceService} from "./devices.service";
+import {Observable, Subject} from "rxjs";
+import {DeviceService, IDeviceService} from "./devices.service";
+import {scan} from "rxjs/operators";
 
 
-export const deviceReducer = db => (event) => {
+export const reducer = (state, event) => {
 
     if (event.key === 'updated') {
         let id = event.id
-        return db.write(`devices.${id}`, event.payload)
+        state[id] = event.payload
     }
 
     if (event.key === 'device-list') {
         let devices = event.data
-        return devices.forEach(document =>
-            db.write(`devices.${document.id}`, document))
+        devices.forEach(device => {
+            state[device.id] = device
+        })
     }
+
+    return state
 }
 
 
-export const DevicesModule = (config, db) => {
+export interface IDevicesModule {
+    state$: Observable<any>
+    controller: IDeviceService
+}
 
+
+export const DevicesModule = (config): IDevicesModule => {
+
+    // Module State
     const events = new Subject()
+    const state$ = events.pipe(scan(reducer, {}))
 
+    // Module Services
     const wsService = WebSocketService(config.services.ws)
     const projService = ProjectionsService(config.services.projections)
     const deviceService = DeviceService(config)
@@ -36,9 +48,8 @@ export const DevicesModule = (config, db) => {
         .then(devices => ({key: 'device-list', data: devices}))
         .then(event => events.next(event))
 
-    events.subscribe(deviceReducer(db))
-
     return {
+        state$,
         controller: deviceService
     }
 }

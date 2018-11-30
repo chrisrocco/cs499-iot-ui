@@ -1,11 +1,6 @@
 import {Subject} from 'rxjs'
 import {map, tap} from "rxjs/operators"
 
-// export interface UpdateEvent {
-//     id: string
-//     key: string
-//     payload: any
-// }
 
 export const WebSocketService = (host) => {
 

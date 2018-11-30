@@ -1,11 +1,17 @@
-import {Subject} from 'rxjs'
-import {map, tap} from "rxjs/operators"
+import {Observable, Subject} from 'rxjs'
+import {map} from "rxjs/operators"
 
 
-export const WebSocketService = (host) => {
+export interface IWsService {
+    events$: Observable<any>
+    send: (data) => void
+}
+
+
+export const WebSocketService = (host): IWsService => {
 
     // Messages stream
-    const messages$ = new Subject()
+    const messages$ = new Subject<{ data }>()
 
     // WebSocket stream adapter
     const socket = new WebSocket(host)
@@ -14,7 +20,7 @@ export const WebSocketService = (host) => {
     // Downstream
     const events$ = messages$.pipe(
         map(msg => msg.data),
-        map(JSON.parse)
+        map(data => JSON.parse(data))
     )
 
     // Module Exports

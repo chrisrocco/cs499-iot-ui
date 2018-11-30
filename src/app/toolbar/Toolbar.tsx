@@ -6,7 +6,7 @@ import {CommandBar} from "office-ui-fabric-react";
 const toolbarItems = [
     {
         key: 'newItem',
-        name: 'New',
+        name: 'Locality',
         cacheKey: 'myCacheKey', // changing this key will invalidate this items cache
         iconProps: {
             iconName: 'Add'
@@ -16,46 +16,21 @@ const toolbarItems = [
             items: [
                 {
                     key: 'emailMessage',
-                    name: 'Email message',
+                    name: 'English',
                     iconProps: {
-                        iconName: 'Mail'
+                        iconName: 'World'
                     },
                     ['data-automation-id']: 'newEmailButton'
                 },
                 {
                     key: 'calendarEvent',
-                    name: 'Calendar event',
+                    name: 'Spanish',
                     iconProps: {
                         iconName: 'Calendar'
                     }
                 }
             ]
         }
-    },
-    {
-        key: 'upload',
-        name: 'Upload',
-        iconProps: {
-            iconName: 'Upload'
-        },
-        href: 'https://dev.office.com/fabric',
-        ['data-automation-id']: 'uploadButton'
-    },
-    {
-        key: 'share',
-        name: 'Share',
-        iconProps: {
-            iconName: 'Share'
-        },
-        onClick: () => console.log('Share')
-    },
-    {
-        key: 'download',
-        name: 'Download',
-        iconProps: {
-            iconName: 'Download'
-        },
-        onClick: () => console.log('Download')
     }
 ]
 

@@ -12,16 +12,19 @@ export const HomeModule = (devicesModule: IDevicesModule) => {
 
             let water = 0
             let power = 0
+            let gas = 0
 
             devices.forEach(device => {
                 let state = device.state.projected.usage
                 water += state.water
                 power += state.power
+                gas += state.gas
             })
 
             return {
                 water,
-                power
+                power,
+                gas
             }
         })
     )

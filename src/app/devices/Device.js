@@ -17,7 +17,7 @@ const styles = {
  * TODO - add a 'type' attribute to the device state in backend
  */
 const render = (props) => {
-    let {device, classes} = props
+    let {device} = props
 
     let inner = <AnyDevice {...props} />
 

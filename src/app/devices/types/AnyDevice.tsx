@@ -1,5 +1,4 @@
-import React from 'react'
-import {BehaviorSubject, Subject} from "rxjs";
+import * as React from 'react'
 
 const styles = {
     thumb: {
@@ -11,7 +10,7 @@ const styles = {
 }
 
 
-export class CAnyDevice extends React.Component {
+export class CAnyDevice extends React.Component<{ command, device }> {
 
     state = { command: '' }
 
@@ -20,7 +19,10 @@ export class CAnyDevice extends React.Component {
     }
 
     render() {
-        let {classes, device} = this.props
+        let {device, command} = this.props
+
+        let dispatch = () => command(device, this.state.command)
+
         return (
             <div>
                 <div style={styles.thumb}>
@@ -33,7 +35,7 @@ export class CAnyDevice extends React.Component {
 
                 <div>
                     <input value={this.state.command} type="text" onChange={this.change}/>
-                    <button onClick={() => console.log(this.state.command)}>Dispatch</button>
+                    <button onClick={dispatch}>Dispatch</button>
                 </div>
             </div>
         )

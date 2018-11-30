@@ -11,7 +11,8 @@ const command = events =>
 const styles = {
     root: {
         padding: '20px',
-        display: "flex"
+        display: "flex",
+        flexWrap: 'wrap'
     }
 }
 
@@ -29,7 +30,9 @@ class DeviceList extends React.Component<{core, devices}> {
             off: c('off'),
             open: c('open'),
             close: c('close'),
-            command: (cmd, device) => console.log(cmd, device)
+            command: (device, key, data = {}) => {
+                props.core.events.emit('devices.command', { device_id: device.id, key, data})
+            }
         }
     }
 
@@ -39,7 +42,7 @@ class DeviceList extends React.Component<{core, devices}> {
         const ctrl = this.ctrl
 
         return (
-            <div style={styles.root}>
+            <div style={styles.root as any}>
                 {devices.map(device => {
                     return (
                         <Device
